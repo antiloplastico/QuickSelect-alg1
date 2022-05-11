@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #define MAX_LINE_SIZE 1000   // maximum size of a line of input
+#define max 100
 
 double duration(struct timespec start, struct timespec end) {
     return end.tv_sec - start.tv_sec
@@ -41,7 +42,7 @@ void swap(int a, int b){
     b = temp;
 }
     
-int partition(int arr[], int l, int r){
+int partition(int *arr[], int l, int r){
     int x = arr[r];
     int i = l;
     for(int j=l;j<r;j++){
@@ -53,7 +54,7 @@ int partition(int arr[], int l, int r){
     swap(arr[i],arr[r]);
     return i;
 }
-int quickSelect(list, left, right, k){
+int quickSelect(int *list[], int left, int right, int k){
     if (left == right){
         return list[right];
     }   
@@ -69,7 +70,8 @@ int quickSelect(list, left, right, k){
 int main(int argc, const char * argv[]){
     int a[1000];
     int n=scanArray(a);
-    int k=..;
+    int k;
+    scanf("%d", k);
     int qs = quickSelect(a,0,n-1,k);
     printf("%d ", qs);
     return 0;
