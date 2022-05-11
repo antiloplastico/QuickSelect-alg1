@@ -16,7 +16,16 @@ double getResolution(){
     return duration(start, end);
 }
 
-
+int quickSelect(list, left, right, k){
+    if (left == right)   return list[right]
+    int pivotIndex = partition(list, left, right,pivotIndex);
+    if (k == pivotIndex)
+        return list[k];
+    else if (k < pivotIndex)
+        right = pivotIndex - 1;
+    else
+        left = pivotIndex + 1;
+}
 
 int main()
 {
