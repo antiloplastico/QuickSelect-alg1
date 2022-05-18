@@ -1,8 +1,10 @@
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
-#define MAX_LINE_SIZE 1000   // maximum size of a line of input
-#define max 100
+#include <math.h>
+#include <assert.h>
+
+#define MAX_LINE_SIZE 10000   // maximum size of a line of input
+
 
 double duration(struct timespec start, struct timespec end) {
     return end.tv_sec - start.tv_sec
@@ -36,43 +38,50 @@ int scanArray(int *a) {
     return size;
 }
 
-void swap(int a, int b){
-    int temp = a;
-    a = b;
-    b = temp;
-}
-    
-int partition(int *arr[], int l, int r){
-    int x = arr[r];
-    int i = l;
-    for(int j=l;j<r;j++){
-        if(arr[j]<=x){
-            swap(arr[i],arr[j]);
-            i++;
-        }
-    }
-    swap(arr[i],arr[r]);
-    return i;
-}
-int quickSelect(int *list[], int left, int right, int k){
-    if (left == right){
-        return list[right];
-    }   
-    int pivotIndex = partition(list, left, right);
-    if (k == pivotIndex)
-        return list[k];
-    else if (k < pivotIndex)
-        right = pivotIndex - 1;
-    else
-        left = pivotIndex + 1;
+void swapp (int *x, int *y){
+	int temp = *x;
+	*x = *y;
+	*y = temp;
 }
 
-int main(int argc, const char * argv[]){
-    int a[1000];
-    int n=scanArray(a);
-    int k;
-    scanf("%d", k);
-    int qs = quickSelect(a,0,n-1,k);
-    printf("%d ", qs);
-    return 0;
+typedef struct{
+	int mc1, mc2;
+}coppia;
+
+int partition3(int *a, int i, int j){
+	int pivot=a[i];
+	int k = i;
+	int h = i+1;
+	for (int l=i+1; l<=j; l++){
+		if (a[l] < pivot) {
+			swapp (&(a[k]), &(a[l]));
+			swapp (&(a[h]), &(a[l]));
+			k++;
+			h++;
+		} else {//l > pivot
+			//non faccio niente
+		}
+	}
+	//printf ("%d %d\n", k, h);
+	//return (coppia){.mc1=k, .mc2=h};
+	return k;
+}
+
+void quick3(int *a, int i, int j){ //vettore in 3 parti: a e' il vettore stesso, j fine scansione, i inizio scansione
+	if (i < j){
+		int c = partition3(a, i, j);
+		quick3(a, i, c);
+		quick3(a, c+1, j);
+	}
+}
+
+int main() {
+	int a[1010];
+	int len = scanArray(a);
+	int nth;
+	scanf ("%d", &nth);
+	
+	quick3(a, 0, len-1);
+	printf ("%d", a[nth-1]);
+
 }
