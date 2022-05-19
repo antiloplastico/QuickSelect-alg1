@@ -60,11 +60,11 @@ int partition3(int *a, int i, int j){
 	return k;
 }
 
-void quick3(int *a, int i, int j){ //vettore in 3 parti: a e' il vettore stesso, j fine scansione, i inizio scansione
-	if (i < j){
+void quick3(int *a, int i, int j, int nth){ //vettore in 3 parti: a e' il vettore stesso, j fine scansione, i inizio scansione
+	if (i < j && nth-1 >= i && nth-1 <=j){
 		int c = partition3(a, i, j);
-		quick3(a, i, c);
-		quick3(a, c+1, j);
+		quick3(a, c+1, j, nth);
+		quick3(a, i, c, nth);
 	}
 }
 
@@ -74,7 +74,7 @@ int main() {
 	int nth;
 	scanf ("%d", &nth);
 	
-	quick3(a, 0, len-1);
+	quick3(a, 0, len-1, nth);
 	printf ("%d", a[nth-1]);
 
 }
