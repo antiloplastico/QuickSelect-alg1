@@ -45,26 +45,18 @@ void swapp (int *x, int *y){
 	*y = temp;
 }
 
-typedef struct{
-	int mc1, mc2;
-}coppia;
-
 int partition3(int *a, int i, int j){
 	int pivot=a[i];
 	int k = i;
-	int h = i+1;
 	for (int l=i+1; l<=j; l++){
 		if (a[l] < pivot) {
 			swapp (&(a[k]), &(a[l]));
-			swapp (&(a[h]), &(a[l]));
+			swapp (&(a[k+1]), &(a[l]));
 			k++;
-			h++;
 		} else {//l > pivot
 			//non faccio niente
 		}
 	}
-	//printf ("%d %d\n", k, h);
-	//return (coppia){.mc1=k, .mc2=h};
 	return k;
 }
 
